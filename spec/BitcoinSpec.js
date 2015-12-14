@@ -47,3 +47,23 @@ describe("checkHash", function () {
     expect(check).toBe(false);
   });
 });
+
+
+describe("SwapOrder", function () {
+  var bit = require("../bitcoin.js");
+
+  it("should return loelh when hello is put into the function", function () {
+    var check = bit.SwapOrder("hello")
+    expect(check).toBe("loelh");
+  });
+
+  it("should return 81cd02ab7e569e8bcd9317e2fe99f2de44d49ab2b8851ba4a308000000000000 ", function () {
+    var check = bit.SwapOrder("00000000000008a3a41b85b8b29ad444def299fee21793cd8b9e567eab02cd81")
+    expect(check).toBe("81cd02ab7e569e8bcd9317e2fe99f2de44d49ab2b8851ba4a308000000000000");
+  });
+
+  it("should return the correct value based on the block header in example 2a ", function () {
+    var check = bit.SwapOrder("3ba3edfd7a7b12b27ac72c3e67768f617fc81bc3888a51323a9fb8aa4b1e5e4a")
+    expect(check).toBe("4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b");
+  });
+});
