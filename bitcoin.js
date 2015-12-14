@@ -15,5 +15,10 @@ var SwapOrder= function(input) {
   return reversedInput.join('')
 }
 
+var littleEndian=function(block) {
+  return true;
+}
+
 exports.checkHash = checkHash;
 exports.SwapOrder=SwapOrder;
+exports.littleEndian=littleEndian;

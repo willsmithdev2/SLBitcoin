@@ -63,7 +63,18 @@ describe("SwapOrder", function () {
   });
 
   it("should return the correct value based on the block header in example 2a ", function () {
-    var check = bit.SwapOrder("3ba3edfd7a7b12b27ac72c3e67768f617fc81bc3888a51323a9fb8aa4b1e5e4a")
-    expect(check).toBe("4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b");
+    var check = bit.SwapOrder("4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b")
+    expect(check).toBe("3ba3edfd7a7b12b27ac72c3e67768f617fc81bc3888a51323a9fb8aa4b1e5e4a");
   });
+});
+
+
+describe("littleEndian", function () {
+  var bit = require("../bitcoin.js");
+
+  it("should return 1dac2b7c when input into littleEndian function ", function () {
+    var check = bit.littleEndian(2083236893)
+    expect(check).toBe("1dac2b7c");
+  });
+
 });
