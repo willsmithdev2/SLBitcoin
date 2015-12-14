@@ -1,0 +1,19 @@
+{
+  "name": "slbitcoin",
+  "version": "1.0.0",
+  "description": "Scott Logic bitcoin tasks for new starters",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/willsmithdev2/SLBitcoin.git"
+  },
+  "author": "Will Smith",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/willsmithdev2/SLBitcoin/issues"
+  },
+  "homepage": "https://github.com/willsmithdev2/SLBitcoin#readme"
+}
