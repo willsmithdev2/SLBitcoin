@@ -5,7 +5,8 @@ var checkHash=function(block) {
  var version=littleEndian(block.version);
  var merkleroot=SwapOrder(block.merkleroot);
 
- var previousBlockHash=((typeof block.previousblockhash==="undefined") ? "0000000000000000000000000000000000000000000000000000000000000000" : SwapOrder(block.previousblockhash) )
+ var previousBlockHash=((typeof block.previousblockhash==="undefined") ?
+ "0000000000000000000000000000000000000000000000000000000000000000" : SwapOrder(block.previousblockhash) )
 
  var time= littleEndian(block.time);
  var bits=littleEndian(block.bits);
