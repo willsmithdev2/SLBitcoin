@@ -72,9 +72,24 @@ describe("SwapOrder", function () {
 describe("littleEndian", function () {
   var bit = require("../bitcoin.js");
 
-  it("should return 1dac2b7c when input into littleEndian function ", function () {
+  it("should return 01000000 when input 1 into littleEndian ", function () {
+    var check = bit.littleEndian(1)
+    expect(check).toBe("01000000");
+  });
+
+  it("should return 1dac2b7c when 2083236893 is input into littleEndian function ", function () {
     var check = bit.littleEndian(2083236893)
     expect(check).toBe("1dac2b7c");
+  });
+
+  it("should return ffff001d when 1d00ffff is input into littleEndian function ", function () {
+    var check = bit.littleEndian("1d00ffff")
+    expect(check).toBe("ffff001d");
+  });
+
+  it("should return 29ab5f49 when 1231006505 is input into littleEndian function ", function () {
+    var check = bit.littleEndian(1231006505)
+    expect(check).toBe("29ab5f49");
   });
 
 });
