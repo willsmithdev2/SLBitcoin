@@ -1,10 +1,27 @@
 var buffer=require('buffer')
+var crypto=require('crypto')
 
 var checkHash=function(block) {
- var merkleroot=SwapOrder(block.merkleroot)
+ var version=littleEndian(block.version);
+ var merkleroot=SwapOrder(block.merkleroot);
+ var previousBlockHash= "0000000000000000000000000000000000000000000000000000000000000000"
+ var time= littleEndian(block.time);
+ var bits=littleEndian(block.bits);
+ var nonce = littleEndian(block.nonce);
+
+ var header= version+previousBlockHash+merkleroot+time+bits+nonce;
+ var headerInBinary=Hex2Bin(header);
+ var hash=crypto.createHash('sha256');
+ var hash2=crypto.createHash('sha256');
+
+ var hashedHeader=Hex2Bin(hash.update(headerInBinary).digest('hex'));
+ var rehashed=hash2.update(hashedHeader).digest('hex');
+ var finalHash=SwapOrder(rehashed);
+
+ console.log("Final hash is "+finalHash)
 
 
-  return true;
+ return block.hash==finalHash;
 }
 
 var SwapOrder= function(input) {
@@ -38,6 +55,22 @@ var littleEndian=function(value) {
   }
 
   return byteBuffer.toString("hex");
+}
+
+
+function Hex2Bin(n){
+  var hex = n, // ASCII HEX: 37="7", 57="W", 71="q"
+      bytes = [],
+      str;
+
+  for(var i=0; i< hex.length-1; i+=2){
+      bytes.push(parseInt(hex.substr(i, 2), 16));
+  }
+
+  str = String.fromCharCode.apply(String, bytes);
+
+  return str;
+
 }
 
 
