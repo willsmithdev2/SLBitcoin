@@ -4,11 +4,13 @@ var crypto=require('crypto')
 var checkHash=function(block) {
  var version=littleEndian(block.version);
  var merkleroot=SwapOrder(block.merkleroot);
- var previousBlockHash= "0000000000000000000000000000000000000000000000000000000000000000"
+ var previousBlockHash = block.previousblockhash || "0000000000000000000000000000000000000000000000000000000000000000"
+
  var time= littleEndian(block.time);
  var bits=littleEndian(block.bits);
  var nonce = littleEndian(block.nonce);
 
+console.log("Previous block is "+ previousBlockHash)
  var header= version+previousBlockHash+merkleroot+time+bits+nonce;
  var headerInBinary=Hex2Bin(header);
  var hash=crypto.createHash('sha256');
