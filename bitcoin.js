@@ -64,7 +64,33 @@ function Hex2Bin(n){
 
 }
 
+var calculateMerkleRoot=function(value){
+  var tx1=reverseEndian("ee6bc0e5f95a4ccd0f00784eab850ff8593f9045de96c6656df41c8f9f9c0888")
+  var tx2=reverseEndian("29c59ec39fc19afd84d928272b3290bbe54558f7b51f75feb858b005dea49c10")
+  console.log("TX 1 hashed "+tx1)
 
+  var merkleroot=reverseEndian(hash(hash(tx1+tx2)))
+
+  return merkleroot;
+
+}
+
+function hash(value){
+  var hash=crypto.createHash('sha256');
+  var hashedOnce=hash.update(Hex2Bin(value)).digest('hex');
+  return hashedOnce;
+}
+
+
+function dhash(value){
+  var hash=crypto.createHash('sha256');
+  var hash2=crypto.createHash('sha256');
+  var hashedOnce=hash.update(value).digest('hex');
+  var hashedTwice=hash2.update(hashedOnce).digest('hex');
+  return hashedTwice;
+}
+
+exports.calculateMerkleRoot=calculateMerkleRoot;
 exports.checkHash = checkHash;
 exports.reverseEndian=reverseEndian;
 exports.padBits=padBits;

@@ -101,3 +101,13 @@ describe("padBits", function () {
   });
 
 });
+
+describe("calculateMerkleRoot", function () {
+  var bit = require("../bitcoin.js");
+  //version
+  it("should pad out the bits wit zeros ", function () {
+    var check = bit.calculateMerkleRoot()
+    expect(check).toBe("01a5f8b432e06c11a32b3f30e6cc9a12da207b9237fddf77850801275cf4fe01");
+  });
+
+});
