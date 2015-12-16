@@ -64,6 +64,30 @@ function Hex2Bin(n){
 
 }
 
+var calculateMerkleRoot=function(block){
+  var transactions=block
+  //Accounts for genesis block
+  if(transactions.length==1){
+    return transactions[0]
+  }
+  if(transactions.length % 2 !=0){
+    var leafNode=transactions[transactions.length-1]
+    transactions.push(leafNode)
+  }
+
+  var hashedRowAbove=[];
+
+  for(var i=0;i<transactions.length;i+=2){
+    var currentTx=transactions[i];
+    var neighbouringTx= transactions[i+1];
+    var parentNode= calculateHashNodeInTree(currentTx,neighbouringTx)
+    hashedRowAbove.push(parentNode)
+  }
+
+  return calculateMerkleRoot(hashedRowAbove)
+
+}
+
 var calculateHashNodeInTree=function(v1,v2){
   var tx1=reverseEndian(v1)
   var tx2=reverseEndian(v2)
@@ -88,6 +112,8 @@ function dhash(value){
   return hashedTwice;
 }
 
+
+exports.calculateMerkleRoot = calculateMerkleRoot;
 exports.calculateHashNodeInTree=calculateHashNodeInTree;
 exports.checkHash = checkHash;
 exports.reverseEndian=reverseEndian;

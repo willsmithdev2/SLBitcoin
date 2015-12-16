@@ -4,8 +4,7 @@ var genesisBlock = {"hash":"000000000019d6689c085ae165831e934ff763ae46a2a6c172b3
 "size":285,
 "height":0,
 "version":1,
-"merkleroot":
-"4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b",
+"merkleroot":"4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b",
 "tx":["4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b"],
 "time":1231006505,
 "nonce":2083236893,
@@ -34,6 +33,9 @@ var badBlock = {
 "isMainChain":true
 }
 
+var threeTransactionsBlock={"hash":"00000000000000000f397b0bab19362a0c47492c2d506a29f4bc6825af2051a8","confirmations":15915,"size":28753,"height":372791,"version":3,"merkleroot":"eaecf5ad306887d21905ef76ea6339af6fba02e41647c274199dba55f0e05e3c","tx":["9946d2ca633fbc81da42016647ef8100c61ef42a07526ae7f3b510966e54bb7c","b2fb4e0c7fb03a1a84243da7a2e27b668432b57ad95edc61b889bb43ad333080","4f00543530f1a91f543d2ba8dd4af4f044c25a537c69f67a65ab7bfab248943c"],"time":1441263977,"nonce":2701824772,"bits":"181443c4","difficulty":54256630327.88996,"chainwork":"00000000000000000000000000000000000000000009d25ac9dce20d043fb648","previousblockhash":"00000000000000000552cde0e45e81a685f96c654e1ad47ec54a4fec803fbba4","nextblockhash":"0000000000000000067c876ae7312a43e3caacc58c6f90b36b85140b88e8bb21","reward":25,"isMainChain":true}
+
+var twoTransactionsBlock= {"hash":"0000000000000000079c58e8b5bce4217f7515a74b170049398ed9b8428beb4a","confirmations":17070,"size":479,"height":371623,"version":3,"merkleroot":"01a5f8b432e06c11a32b3f30e6cc9a12da207b9237fddf77850801275cf4fe01","tx":["ee6bc0e5f95a4ccd0f00784eab850ff8593f9045de96c6656df41c8f9f9c0888","29c59ec39fc19afd84d928272b3290bbe54558f7b51f75feb858b005dea49c10"],"time":1440604813,"nonce":3431621579,"bits":"181443c4","difficulty":54256630327.88996,"chainwork":"0000000000000000000000000000000000000000000998b7adec271cd0ea7258","previousblockhash":"0000000000000000027d0985fef71cbc05a5ee5cdbdc4c6baf2307e6c5db8591","nextblockhash":"000000000000000013677449d7375ed22f9c66a94940328081412179795a1ac5","reward":25,"isMainChain":true}
 
 describe("checkHash", function () {
   var bit = require("../bitcoin.js");
@@ -104,12 +106,35 @@ describe("padBits", function () {
 
 describe("calculateHashNodeInTree", function () {
   var bit = require("../bitcoin.js");
-  //version
-  it("should pad out the bits wit zeros ", function () {
+
+  it("should calculate a correct hash given two values ", function () {
     var v1="ee6bc0e5f95a4ccd0f00784eab850ff8593f9045de96c6656df41c8f9f9c0888"
     var v2="29c59ec39fc19afd84d928272b3290bbe54558f7b51f75feb858b005dea49c10"
     var check = bit.calculateHashNodeInTree(v1,v2)
     expect(check).toBe("01a5f8b432e06c11a32b3f30e6cc9a12da207b9237fddf77850801275cf4fe01");
   });
+});
 
+describe("calculateMerkleRoot", function () {
+  var bit = require("../bitcoin.js");
+
+  it("return merkle root for genesis block", function () {
+    var check = bit.calculateMerkleRoot(genesisBlock.tx)
+    expect(check).toBe("4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b");
+  });
+
+  it("return merkle root for block with 3 transactions", function () {
+    var check = bit.calculateMerkleRoot(threeTransactionsBlock.tx)
+    expect(check).toBe("eaecf5ad306887d21905ef76ea6339af6fba02e41647c274199dba55f0e05e3c");
+  });
+
+  it("return merkle root for block with 2 transactions", function () {
+    var check = bit.calculateMerkleRoot(twoTransactionsBlock.tx)
+    expect(check).toBe("01a5f8b432e06c11a32b3f30e6cc9a12da207b9237fddf77850801275cf4fe01");
+  });
+
+  it("return the correct merkle root given a large data set of tx's ", function () {
+    var check = bit.calculateMerkleRoot(goodBlock.tx)
+    expect(check).toBe("f6095877fcfc5b57cf720d94c6e1c964017ad6175200aab0dfe44604b954651b");
+  });
 });
