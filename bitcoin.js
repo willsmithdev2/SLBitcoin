@@ -3,7 +3,7 @@ var crypto=require('crypto')
 
 var checkHash=function(block) {
  var version=reverseEndian(padBits(block.version));
- var merkleroot=reverseEndian(block.merkleroot);
+ var merkleroot=reverseEndian(calculateMerkleRoot(block.tx));
 
  var previousBlockHash=((typeof block.previousblockhash==="undefined") ?
  "0000000000000000000000000000000000000000000000000000000000000000" : SwapOrder(block.previousblockhash) )
@@ -66,10 +66,11 @@ function Hex2Bin(n){
 
 var calculateMerkleRoot=function(block){
   var transactions=block
-  //Accounts for genesis block
+
   if(transactions.length==1){
     return transactions[0]
   }
+  //If odd number of elements add another node
   if(transactions.length % 2 !=0){
     var leafNode=transactions[transactions.length-1]
     transactions.push(leafNode)
