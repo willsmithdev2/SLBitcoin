@@ -6,7 +6,7 @@ var checkHash=function(block) {
  var version=reverseEndian(padBits(block.version));
  var merkleroot=reverseEndian(calculateMerkleRoot(block.tx));
 
- var previousBlockHash=((typeof block.previousblockhash==="undefined") ?
+ var previousBlockHash=((!block.previousblockhash) ?
  "0000000000000000000000000000000000000000000000000000000000000000" : SwapOrder(block.previousblockhash) );
 
  var time= reverseEndian(block.time);
