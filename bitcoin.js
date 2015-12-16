@@ -24,7 +24,7 @@ var checkHash=function(block) {
 
 function hash(value){
   var hash=crypto.createHash('sha256');
-  var hashedOnce=hash.update(Hex2Bin(value)).digest('hex');
+  var hashedOnce=hash.update(hex2Bin(value)).digest('hex');
   return hashedOnce;
 };
 
@@ -87,7 +87,7 @@ var calculateHashNodeInTree=function(v1,v2){
   return merkleroot;
 };
 
-function Hex2Bin(n){
+function hex2Bin(n){
   var hex = n, // ASCII HEX: 37="7", 57="W", 71="q"
       bytes = [],
       str;
