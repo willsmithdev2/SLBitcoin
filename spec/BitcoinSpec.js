@@ -102,11 +102,13 @@ describe("padBits", function () {
 
 });
 
-describe("calculateMerkleRoot", function () {
+describe("calculateHashNodeInTree", function () {
   var bit = require("../bitcoin.js");
   //version
   it("should pad out the bits wit zeros ", function () {
-    var check = bit.calculateMerkleRoot()
+    var v1="ee6bc0e5f95a4ccd0f00784eab850ff8593f9045de96c6656df41c8f9f9c0888"
+    var v2="29c59ec39fc19afd84d928272b3290bbe54558f7b51f75feb858b005dea49c10"
+    var check = bit.calculateHashNodeInTree(v1,v2)
     expect(check).toBe("01a5f8b432e06c11a32b3f30e6cc9a12da207b9237fddf77850801275cf4fe01");
   });
 
