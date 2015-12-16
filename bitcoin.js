@@ -57,12 +57,12 @@ var calculateMerkleRoot=function(block){
   var transactions=block;
 
   if(transactions.length==1){
-    return transactions[0]
+    return transactions[0];
   };
   //If odd number of elements add another node
   if(transactions.length % 2 !=0){
-    var leafNode=transactions[transactions.length-1]
-    transactions.push(leafNode)
+    var leafNode=transactions[transactions.length-1];
+    transactions.push(leafNode);
   };
 
   var hashedRowAbove=[];
@@ -70,8 +70,8 @@ var calculateMerkleRoot=function(block){
   for(var i=0;i<transactions.length;i+=2){
     var currentTx=transactions[i];
     var neighbouringTx= transactions[i+1];
-    var parentNode= calculateHashNodeInTree(currentTx,neighbouringTx)
-    hashedRowAbove.push(parentNode)
+    var parentNode= calculateHashNodeInTree(currentTx,neighbouringTx);
+    hashedRowAbove.push(parentNode);
   };
 
   return calculateMerkleRoot(hashedRowAbove);
