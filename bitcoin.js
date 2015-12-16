@@ -1,6 +1,7 @@
 var buffer=require('buffer')
 var crypto=require('crypto')
 
+
 var checkHash=function(block) {
  var version=reverseEndian(padBits(block.version));
  var merkleroot=reverseEndian(calculateMerkleRoot(block.tx));
@@ -52,21 +53,6 @@ var padBits=function(value) {
 }
 
 
-function Hex2Bin(n){
-  var hex = n, // ASCII HEX: 37="7", 57="W", 71="q"
-      bytes = [],
-      str;
-
-  for(var i=0; i< hex.length-1; i+=2){
-      bytes.push(parseInt(hex.substr(i, 2), 16));
-  }
-
-  str = String.fromCharCode.apply(String, bytes);
-
-  return str;
-
-}
-
 var calculateMerkleRoot=function(block){
   var transactions=block
 
@@ -101,8 +87,19 @@ var calculateHashNodeInTree=function(v1,v2){
   return merkleroot;
 }
 
+function Hex2Bin(n){
+  var hex = n, // ASCII HEX: 37="7", 57="W", 71="q"
+      bytes = [],
+      str;
 
+  for(var i=0; i< hex.length-1; i+=2){
+      bytes.push(parseInt(hex.substr(i, 2), 16));
+  }
 
+  str = String.fromCharCode.apply(String, bytes);
+
+  return str;
+}
 
 exports.calculateMerkleRoot = calculateMerkleRoot;
 exports.calculateHashNodeInTree=calculateHashNodeInTree;
