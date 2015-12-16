@@ -13,15 +13,18 @@ var checkHash=function(block) {
  var nonce = reverseEndian(block.nonce);
 
  var header= version+previousBlockHash+merkleroot+time+bits+nonce;
- var headerInBinary=Hex2Bin(header);
- var hash=crypto.createHash('sha256');
- var hash2=crypto.createHash('sha256');
 
- var hashedHeader=Hex2Bin(hash.update(headerInBinary).digest('hex'));
- var rehashed=hash2.update(hashedHeader).digest('hex');
+ var hashedHeader=hash(header);
+ var rehashed=hash(hashedHeader);
  var finalHash=reverseEndian(rehashed);
 
  return block.hash==finalHash;
+}
+
+function hash(value){
+  var hash=crypto.createHash('sha256');
+  var hashedOnce=hash.update(Hex2Bin(value)).digest('hex');
+  return hashedOnce;
 }
 
 var reverseEndian= function(input) {
@@ -98,11 +101,7 @@ var calculateHashNodeInTree=function(v1,v2){
   return merkleroot;
 }
 
-function hash(value){
-  var hash=crypto.createHash('sha256');
-  var hashedOnce=hash.update(Hex2Bin(value)).digest('hex');
-  return hashedOnce;
-}
+
 
 
 exports.calculateMerkleRoot = calculateMerkleRoot;
