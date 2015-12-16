@@ -19,7 +19,7 @@ var checkHash=function(block) {
  var rehashed=hash(hashedHeader);
  var finalHash=reverseEndian(rehashed);
 
- return block.hash==finalHash;
+ return block.hash===finalHash;
 };
 
 function hash(value){
