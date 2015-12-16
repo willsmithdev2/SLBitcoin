@@ -37,7 +37,7 @@ var reverseEndian= function(input) {
     temp=reversedInput[i+1];
     reversedInput[i+1]=reversedInput[i];
     reversedInput[i] = temp;
-  };
+  }
 
   return reversedInput.join('');
 };
@@ -47,7 +47,7 @@ var padBits=function(value) {
   var paddedValue=valueAsHex;
   for(var i=0;i<8-valueAsHex.length; i++){
      paddedValue="0"+paddedValue;
-  };
+  }
 
   return paddedValue;
 };
@@ -63,7 +63,7 @@ var calculateMerkleRoot=function(block){
   if(transactions.length % 2 !=0){
     var leafNode=transactions[transactions.length-1];
     transactions.push(leafNode);
-  };
+  }
 
   var hashedRowAbove=[];
 
@@ -72,7 +72,7 @@ var calculateMerkleRoot=function(block){
     var neighbouringTx= transactions[i+1];
     var parentNode= calculateHashNodeInTree(currentTx,neighbouringTx);
     hashedRowAbove.push(parentNode);
-  };
+  }
 
   return calculateMerkleRoot(hashedRowAbove);
 
@@ -94,7 +94,7 @@ function Hex2Bin(n){
 
   for(var i=0; i< hex.length-1; i+=2){
       bytes.push(parseInt(hex.substr(i, 2), 16));
-  };
+  }
 
   str = String.fromCharCode.apply(String, bytes);
 
