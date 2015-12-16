@@ -2,15 +2,15 @@ var buffer=require('buffer')
 var crypto=require('crypto')
 
 var checkHash=function(block) {
- var version=littleEndian(block.version);
+ var version=SwapOrder(padBits(block.version));
  var merkleroot=SwapOrder(block.merkleroot);
 
  var previousBlockHash=((typeof block.previousblockhash==="undefined") ?
  "0000000000000000000000000000000000000000000000000000000000000000" : SwapOrder(block.previousblockhash) )
 
- var time= littleEndian(block.time);
- var bits=littleEndian(block.bits);
- var nonce = littleEndian(block.nonce);
+ var time= SwapOrder(block.time);
+ var bits=SwapOrder(block.bits);
+ var nonce = SwapOrder(block.nonce);
 
  var header= version+previousBlockHash+merkleroot+time+bits+nonce;
  var headerInBinary=Hex2Bin(header);
@@ -25,7 +25,8 @@ var checkHash=function(block) {
 }
 
 var SwapOrder= function(input) {
-  var reversedInput=input.split('').reverse();
+  var valueAsHex=input.toString(16);
+  var reversedInput=valueAsHex.split('').reverse();
   var temp;
 
   for(var i=0; i<reversedInput.length;i+=2){
@@ -37,24 +38,14 @@ var SwapOrder= function(input) {
   return reversedInput.join('');
 }
 
-var littleEndian=function(value) {
+var padBits=function(value) {
   var valueAsHex=value.toString(16);
   var paddedValue=valueAsHex;
   for(var i=0;i<8-valueAsHex.length; i++){
      paddedValue="0"+paddedValue;
   }
 
-  var byteBuffer=new Buffer(paddedValue,"hex");
-  var tmp;
-  var counter=byteBuffer.length - 1;
-  for(var i=0; i<(byteBuffer.length/2);i++){
-    tmp=byteBuffer[i];
-    byteBuffer[i]=byteBuffer[counter];
-    byteBuffer[counter]=tmp;
-    counter--;
-  }
-
-  return byteBuffer.toString("hex");
+  return paddedValue;
 }
 
 
@@ -76,4 +67,4 @@ function Hex2Bin(n){
 
 exports.checkHash = checkHash;
 exports.SwapOrder=SwapOrder;
-exports.littleEndian=littleEndian;
+exports.padBits=padBits;
