@@ -55,38 +55,38 @@ describe("checkHash", function () {
 });
 
 
-describe("SwapOrder", function () {
+describe("reverseEndian", function () {
   var bit = require("../bitcoin.js");
 
   it("should return loelh when hello is put into the function", function () {
-    var check = bit.SwapOrder("hello")
+    var check = bit.reverseEndian("hello")
     expect(check).toBe("loelh");
   });
 
   it("should return 81cd02ab7e569e8bcd9317e2fe99f2de44d49ab2b8851ba4a308000000000000 ", function () {
-    var check = bit.SwapOrder("00000000000008a3a41b85b8b29ad444def299fee21793cd8b9e567eab02cd81")
+    var check = bit.reverseEndian("00000000000008a3a41b85b8b29ad444def299fee21793cd8b9e567eab02cd81")
     expect(check).toBe("81cd02ab7e569e8bcd9317e2fe99f2de44d49ab2b8851ba4a308000000000000");
   });
 
   it("should return the correct value based on the block header in example 2a ", function () {
-    var check = bit.SwapOrder("4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b")
+    var check = bit.reverseEndian("4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b")
     expect(check).toBe("3ba3edfd7a7b12b27ac72c3e67768f617fc81bc3888a51323a9fb8aa4b1e5e4a");
   });
 
   //nonce
    it("should return 1dac2b7c when 2083236893 is input into littleEndian function ", function () {
-     var check = bit.SwapOrder(2083236893)
+     var check = bit.reverseEndian(2083236893)
      expect(check).toBe("1dac2b7c");
    });
   //bits
    it("should return ffff001d when 1d00ffff is input into littleEndian function ", function () {
-     var check = bit.SwapOrder("1d00ffff")
+     var check = bit.reverseEndian("1d00ffff")
      expect(check).toBe("ffff001d");
    });
 
  //time
    it("should return 29ab5f49 when 1231006505 is input into littleEndian function ", function () {
-     var check = bit.SwapOrder(1231006505)
+     var check = bit.reverseEndian(1231006505)
      expect(check).toBe("29ab5f49");
    });
 });

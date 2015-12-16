@@ -2,15 +2,15 @@ var buffer=require('buffer')
 var crypto=require('crypto')
 
 var checkHash=function(block) {
- var version=SwapOrder(padBits(block.version));
- var merkleroot=SwapOrder(block.merkleroot);
+ var version=reverseEndian(padBits(block.version));
+ var merkleroot=reverseEndian(block.merkleroot);
 
  var previousBlockHash=((typeof block.previousblockhash==="undefined") ?
  "0000000000000000000000000000000000000000000000000000000000000000" : SwapOrder(block.previousblockhash) )
 
- var time= SwapOrder(block.time);
- var bits=SwapOrder(block.bits);
- var nonce = SwapOrder(block.nonce);
+ var time= reverseEndian(block.time);
+ var bits=reverseEndian(block.bits);
+ var nonce = reverseEndian(block.nonce);
 
  var header= version+previousBlockHash+merkleroot+time+bits+nonce;
  var headerInBinary=Hex2Bin(header);
@@ -19,12 +19,12 @@ var checkHash=function(block) {
 
  var hashedHeader=Hex2Bin(hash.update(headerInBinary).digest('hex'));
  var rehashed=hash2.update(hashedHeader).digest('hex');
- var finalHash=SwapOrder(rehashed);
+ var finalHash=reverseEndian(rehashed);
 
  return block.hash==finalHash;
 }
 
-var SwapOrder= function(input) {
+var reverseEndian= function(input) {
   var valueAsHex=input.toString(16);
   var reversedInput=valueAsHex.split('').reverse();
   var temp;
@@ -66,5 +66,5 @@ function Hex2Bin(n){
 
 
 exports.checkHash = checkHash;
-exports.SwapOrder=SwapOrder;
+exports.reverseEndian=reverseEndian;
 exports.padBits=padBits;
