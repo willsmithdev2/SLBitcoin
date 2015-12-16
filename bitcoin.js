@@ -105,15 +105,6 @@ function hash(value){
 }
 
 
-function dhash(value){
-  var hash=crypto.createHash('sha256');
-  var hash2=crypto.createHash('sha256');
-  var hashedOnce=hash.update(value).digest('hex');
-  var hashedTwice=hash2.update(hashedOnce).digest('hex');
-  return hashedTwice;
-}
-
-
 exports.calculateMerkleRoot = calculateMerkleRoot;
 exports.calculateHashNodeInTree=calculateHashNodeInTree;
 exports.checkHash = checkHash;
