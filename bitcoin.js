@@ -2,12 +2,13 @@ var buffer=require('buffer');
 var crypto=require('crypto');
 
 
+
 var checkHash=function(block) {
  var version=reverseEndian(padBits(block.version));
  var merkleroot=reverseEndian(calculateMerkleRoot(block.tx));
 
  var previousBlockHash=((!block.previousblockhash) ?
- "0000000000000000000000000000000000000000000000000000000000000000" : SwapOrder(block.previousblockhash) );
+ "0000000000000000000000000000000000000000000000000000000000000000" : reverseEndian(block.previousblockhash) );
 
  var time= reverseEndian(block.time);
  var bits=reverseEndian(block.bits);
